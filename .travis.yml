@@ -9,7 +9,7 @@ install:
   - pip install -r requirements-${TRAVIS_PYTHON_VERSION}.txt --allow-external argparse
   - pip install coveralls
   - pip install coverage
-  - pip install .
+  - python setup.py develop
 script:
   - coverage run -m nose2.__main__ nose2 -v
 after_success:
