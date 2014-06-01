@@ -12,7 +12,8 @@ class JunitXmlPluginFunctionalTest(FunctionalTestCase, TestCase):
         work_dir = os.getcwd()
         test_dir = support_file(*scenario)
         junit_report = os.path.join(work_dir, 'nose2-junit.xml')
-
+        if os.path.exists(junit_report):
+            os.remove(junit_report)
         proc = self.runIn(work_dir,
                           '-s%s' % test_dir,
                           '--plugin=nose2.plugins.junitxml',
@@ -78,3 +79,21 @@ class JunitXmlPluginFunctionalTest(FunctionalTestCase, TestCase):
         self.assertTrue(os.path.isfile(junit_report),
                         "junitxml report wasn't found in working directory. "
                         "Searched for " + junit_report)
+
+class JunitXmlPluginFunctionalFailureTest(FunctionalTestCase, TestCase):
+    def test_failure_to_write_report(self):
+        proc = self.runIn('scenario/junitxml/fail_to_write',
+                          '--plugin=nose2.plugins.junitxml',
+                          '-v',
+                          '--junit-xml')
+
+        self.assertTestRunOutputMatches(
+            proc,
+            stderr='test \(test_junitxml_fail_to_write.Test\) \.* ok')
+        self.assertTestRunOutputMatches(
+            proc, stderr='Ran 1 test')
+        self.assertTestRunOutputMatches(
+            proc, stderr=r'Plugin IOError: Failed to run StopTestRunEvent: No such file or directory: \'/does/not/exist.xml\'')
+        self.assertEqual(proc.poll(), 0)
+
+
