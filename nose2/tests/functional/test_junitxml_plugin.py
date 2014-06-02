@@ -80,6 +80,7 @@ class JunitXmlPluginFunctionalTest(FunctionalTestCase, TestCase):
                         "junitxml report wasn't found in working directory. "
                         "Searched for " + junit_report)
 
+
 class JunitXmlPluginFunctionalFailureTest(FunctionalTestCase, TestCase):
     def test_failure_to_write_report(self):
         proc = self.runIn('scenario/junitxml/fail_to_write',
@@ -93,7 +94,7 @@ class JunitXmlPluginFunctionalFailureTest(FunctionalTestCase, TestCase):
         self.assertTestRunOutputMatches(
             proc, stderr='Ran 1 test')
         self.assertTestRunOutputMatches(
-            proc, stderr=r'Plugin Error: Failed to run StopTestRunEvent: \[Errno 2\] No such file or directory: \'/does/not/exist.xml\'')
+            proc, stderr=r'Plugin Error: Failed to run StopTestRunEvent: \[Errno 2\] JUnitXML: Parent folder does not exist for file: \'/does/not/exist.xml\'')
         self.assertEqual(proc.poll(), 0)
 
 
