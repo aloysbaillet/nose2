@@ -224,13 +224,9 @@ class Hook(object):
         for plugin in self.plugins[:]:
             try:
                 result = getattr(plugin, self.method)(event)
-            except IOError as e:
-                log.exception('Plugin IOError: Failed to run %s'%event.__class__.__name__)
-                sys.stderr.write('Plugin IOError: Failed to run %s: %s: %r\n'%(event.__class__.__name__, e.args[1], e.filename))
-                result = None
             except Exception as e:
-                log.exception('Plugin Error: Failed to run %s'%event.__class__.__name__)
-                sys.stderr.write('Plugin Error: Failed to run %s: %s\n'%(event.__class__.__name__, e.args))
+                log.debug('Plugin Error: Failed to run %s'%event.__class__.__name__, exc_info=True)
+                sys.stderr.write('Plugin Error: Failed to run %s: %s\n'%(event.__class__.__name__, e))
                 result = None
             if event.handled:
                 return result

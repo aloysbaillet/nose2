@@ -93,7 +93,7 @@ class JunitXmlPluginFunctionalFailureTest(FunctionalTestCase, TestCase):
         self.assertTestRunOutputMatches(
             proc, stderr='Ran 1 test')
         self.assertTestRunOutputMatches(
-            proc, stderr=r'Plugin IOError: Failed to run StopTestRunEvent: No such file or directory: \'/does/not/exist.xml\'')
+            proc, stderr=r'Plugin Error: Failed to run StopTestRunEvent: \[Errno 2\] No such file or directory: \'/does/not/exist.xml\'')
         self.assertEqual(proc.poll(), 0)
 
 
