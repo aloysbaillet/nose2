@@ -5,7 +5,6 @@
 # Rights Reserved. See: http://docs.python.org/license.html
 
 import logging
-import sys
 
 import argparse
 import six
@@ -222,12 +221,7 @@ class Hook(object):
 
     def __call__(self, event):
         for plugin in self.plugins[:]:
-            try:
-                result = getattr(plugin, self.method)(event)
-            except Exception as e:
-                log.debug('Plugin Error: Failed to run %s'%event.__class__.__name__, exc_info=True)
-                sys.stderr.write('Plugin Error: Failed to run %s: %s\n'%(event.__class__.__name__, e))
-                result = None
+            result = getattr(plugin, self.method)(event)
             if event.handled:
                 return result
 

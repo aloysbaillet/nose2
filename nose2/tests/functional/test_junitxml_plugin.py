@@ -87,14 +87,12 @@ class JunitXmlPluginFunctionalFailureTest(FunctionalTestCase, TestCase):
                           '--plugin=nose2.plugins.junitxml',
                           '-v',
                           '--junit-xml')
+        self.assertEqual(proc.poll(), 1)
 
         self.assertTestRunOutputMatches(
             proc,
             stderr='test \(test_junitxml_fail_to_write.Test\) \.* ok')
         self.assertTestRunOutputMatches(
-            proc, stderr='Ran 1 test')
-        self.assertTestRunOutputMatches(
-            proc, stderr=r'Plugin Error: Failed to run StopTestRunEvent: \[Errno 2\] JUnitXML: Parent folder does not exist for file: \'/does/not/exist.xml\'')
-        self.assertEqual(proc.poll(), 0)
+            proc, stderr=r'Internal Error: runTests aborted: \[Errno 2\] JUnitXML: Parent folder does not exist for file: \'/does/not/exist\.xml\'')
 
 
