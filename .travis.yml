@@ -9,8 +9,9 @@ install:
   - pip install -r requirements-${TRAVIS_PYTHON_VERSION}.txt --allow-external argparse
   - pip install coveralls
   - pip install coverage
+  - python setup.py develop
 script:
-  - PYTHONPATH=. coverage run -m nose2.__main__ -v
+  - coverage run -m nose2.__main__ nose2 -v
 after_success:
   - python -c "import sys; sys.exit(sys.version_info[0:2]!=(3,3));" && coveralls
 deploy:

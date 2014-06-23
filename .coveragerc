@@ -1,9 +1,9 @@
 [run]
 branch = True
-source = nose2
-include = nose2/*
-omit = nose2/*/tests/*
-       nose2/tests/*
+source = src/nose2
+include = src/nose2/*
+omit = src/nose2/*/tests/*
+       src/nose2/tests/*
        test_*.*
        __init__.py
        nose2/backports/*

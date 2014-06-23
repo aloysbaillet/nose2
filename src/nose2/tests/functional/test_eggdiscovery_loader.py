@@ -1,14 +1,12 @@
 import sys
 from nose2.tests._common import FunctionalTestCase, support_file
-import nose2.plugins.loader.eggdiscovery #@UnusedImport This is not very elegant, but it allows eggdiscovery to be found in Travis (or when run with PYTHONPATH=.)
 
 try:
     import pkg_resources
-
 except ImportError:
     pkg_resources = None
-
 else:
+    
     class EggDiscoveryFunctionalTest(FunctionalTestCase):
         def setUp(self):
             for m in [m for m in sys.modules if m.startswith('pkgegg')]:

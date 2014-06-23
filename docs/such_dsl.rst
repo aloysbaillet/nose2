@@ -15,7 +15,7 @@ What does it look like?
 
 Unlike some python testing DSLs, such is just plain old python.
 
-.. literalinclude :: ../nose2/tests/functional/support/such/test_such.py
+.. literalinclude :: ../src/nose2/tests/functional/support/such/test_such.py
    :language: python
 
 The tests it defines are unittest tests, and can be used with nose2
@@ -23,7 +23,7 @@ with just the layers plugin. You also have the option of activating a
 reporting plugin (:class:`nose2.plugins.layers.LayerReporter`) to
 provide a more discursive brand of output:
 
-.. literalinclude :: ../nose2/tests/functional/support/such/output.txt
+.. literalinclude :: ../src/nose2/tests/functional/support/such/output.txt
 
 How does it work?
 =================
