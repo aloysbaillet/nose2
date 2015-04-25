@@ -68,3 +68,28 @@ else:
                 'pkgunegg')
             self.assertTestRunOutputMatches(proc, stderr='FAILED \(failures=5, errors=1, skipped=1\)')
     
+    class EggWithNamespaceDiscoveryFunctionalTest(FunctionalTestCase):
+        def setUp(self):
+            for m in [m for m in sys.modules if m.startswith('rootnamespace')]:
+                del sys.modules[m]
+            self.egg_path2 = support_file('scenario/test_in_namespace_pkg/src2')
+            sys.path.append(self.egg_path2)
+            self.egg_path1 = support_file('scenario/test_in_namespace_pkg/rsub1-0.0.0-py2.7.egg')
+            sys.path.append(self.egg_path1)
+    
+        def tearDown(self):
+            if self.egg_path1 in sys.path:
+                sys.path.remove(self.egg_path1)
+            if self.egg_path2 in sys.path:
+                sys.path.remove(self.egg_path2)
+            for m in [m for m in sys.modules if m.startswith('rootnamespace')]:
+                del sys.modules[m]
+        
+        def test_egg_with_namespace_pkg_are_properly_matched(self):
+            proc = self.runIn(
+                'scenario/test_in_namespace_pkg',
+                '-v',
+                '--plugin=nose2.plugins.loader.eggdiscovery',
+                'rootnamespace.sub1')
+            self.assertTestRunOutputMatches(proc, stderr='Ran 1 test in')
+        
